@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0f1f35;
+  --color-ink-800: #172a45;
+  --color-ink-700: #22385a;
+  --color-gold: #c9a45c;
+  --color-gold-600: #b08a43;
+  --color-gold-100: #f3e9d4;
+  --color-sand: #f6f1e8;
+  --color-stone: #e7dfd1;
+  --color-muted: #5d6675;
+  --color-line: #e4ddd0;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-sand text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+@utility eyebrow {
+  @apply text-[0.7rem] font-semibold tracking-[0.28em] text-gold-600 uppercase;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200 disabled:opacity-60;
+}
+@utility btn-gold {
+  @apply btn bg-gold text-ink hover:bg-gold-600 hover:text-white;
+}
+@utility btn-ink {
+  @apply btn bg-ink text-white hover:bg-ink-700;
+}
+@utility btn-ghost {
+  @apply btn border border-current/25 hover:border-current/70;
+}
+@utility field {
+  @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[0.95rem] text-ink placeholder:text-muted/70 focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none;
+}
+@utility label {
+  @apply mb-1.5 block text-xs font-semibold tracking-wider text-muted uppercase;
+}
+@utility card {
+  @apply overflow-hidden rounded-3xl bg-white shadow-[0_1px_0_rgba(15,31,53,0.04),0_18px_40px_-24px_rgba(15,31,53,0.25)];
+}
+
+@layer components {
+  /* Rich text from the CMS */
+  .prose-genesis {
+    @apply max-w-none text-[1.05rem] leading-8 text-ink/85;
+  }
+  .prose-genesis > * + * {
+    @apply mt-5;
+  }
+  .prose-genesis h2 {
+    @apply mt-10 text-2xl text-ink sm:text-3xl;
+  }
+  .prose-genesis h3 {
+    @apply mt-8 text-xl text-ink;
+  }
+  .prose-genesis ul {
+    @apply list-disc space-y-2 pl-6 marker:text-gold;
+  }
+  .prose-genesis ol {
+    @apply list-decimal space-y-2 pl-6;
+  }
+  .prose-genesis a {
+    @apply text-gold-600 underline underline-offset-4;
+  }
+  .prose-genesis blockquote {
+    @apply border-l-2 border-gold pl-5 italic;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
