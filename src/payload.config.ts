@@ -58,7 +58,16 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || '' },
+    // Runtime uses Neon’s pooled URL. Migrations use the direct URL.
+    pool: {
+      connectionString:
+        (process.env.PAYLOAD_MIGRATING === 'true'
+          ? process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL_UNPOOLED
+          : undefined) ||
+        process.env.DATABASE_URL ||
+        process.env.POSTGRES_URL ||
+        '',
+    },
     migrationDir: path.resolve(dirname, 'migrations'),
     // Schema changes go through migrations in every environment (see README).
     push: false,
